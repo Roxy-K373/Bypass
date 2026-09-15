@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Lyc4n's Bypass Format Converter</title>
+    <title>Roxy x Meija Bypass Format Converter</title>
 
     <!-- Bypass CSS (embedded) -->
     <style>
@@ -507,8 +507,8 @@
     <div class="app-container">
         <!-- Header -->
         <header>
-            <h1>Lyc4n's Bypass Formatting Tool</h1>
-            <div class="subtitle">Made by Lyc4nLD - With 💖 for the modding community.</div>
+            <h1>Roxy x Meija Bypass Formatting Tool</h1>
+            <div class="subtitle">Remodeled by Roxy x Meija.</div>
         </header>
 
         <!-- Config Card -->
@@ -579,14 +579,14 @@
 
         // --- Bypass Types ---
         const bypassTypes = [
-            { id: 'encoff', title: 'EncOff Format', ext: 'txt', gen: (o) => { let s=["/* ===== EncOff FORMAT ===== */"]; o.forEach(x=>s.push(`EncOff(0x${x.toString(16).toUpperCase()}),`)); return s.join('\n'); } },
-            { id: 'bypass_offsets', title: 'Bypass Offsets', ext: 'cpp', gen: (o) => { let s=["/* ===== BYPASS OFFSETS ===== */"]; o.forEach((x,i)=>s.push(`inline uintptr_t bypass${i+1} = 0x${x.toString(16).toUpperCase()};`)); return s.join('\n'); } },
-            { id: 'direct_patch', title: 'Direct Memory Patch', ext: 'cpp', gen: (o, lib, pat) => { let s=["/* ===== DIRECT MEMORY PATCH ===== */"]; o.forEach(x=>s.push(`MemoryPatch::createWithHex("${lib}", 0x${x.toString(16).toUpperCase()}, "${pat}").Modify();`)); return s.join('\n'); } },
-            { id: 'armfalse_patch', title: 'ArmFalse Patch', ext: 'cpp', gen: (o, lib) => { let s=["/* ===== BYPASS MEMORY PATCH (armFalse) ===== */"]; for(let i=0;i<o.length;i++) s.push(`MemoryPatch::createWithHex(OBFUSCATE("${lib}"), bypass${i+1}, armFalse).Modify();`); return s.join('\n'); } },
-            { id: 'tools_hook', title: 'Tools::Hook Calls', ext: 'cpp', gen: (o, lib) => { let s=["/* ===== TOOLS::HOOK CALLS ===== */"]; o.forEach(x=>s.push(`Tools::Hook((void*)getAbsoluteAddress(OBFUSCATE("${lib}"), 0x${x.toString(16).toUpperCase()}), (void*)hook_bypass, (void**)&orig_bypass);`)); return s.join('\n'); } },
-            { id: 'dobby_hook', title: 'Dobby Hook Calls', ext: 'cpp', gen: (o, lib) => { let s=["/* ===== DOBBY HOOK CALLS ===== */"]; o.forEach(x=>s.push(`DobbyHook((void*)getAbsoluteAddress(OBFUSCATE("${lib}"), 0x${x.toString(16).toUpperCase()}), (void*)hook_bypass, (void**)&orig_bypass);`)); return s.join('\n'); } },
-            { id: 'hook_lib', title: 'Hook Lib Format', ext: 'cpp', gen: (o, lib) => { let s=["/* ===== HOOK_LIB FORMAT ===== */"]; o.forEach(x=>s.push(`HOOK_LIB("${lib}", "0x${x.toString(16).toUpperCase()}", h_disabled, o_disabled);`)); return s.join('\n'); } },
-            { id: 'hexpatch_injector', title: 'HexPatch (Injector)', ext: 'lua', gen: (o, lib, pat) => { let s=["/* ===== HEXPATCH (INJECTOR) ===== */"]; o.forEach(x=>s.push(`HexPatches.MemoryPatch("${lib}", 0x${x.toString(16).toUpperCase()}, "${pat}", 32);`)); return s.join('\n'); } }
+            { id: 'encoff', title: 'EncOff Format', ext: 'txt', gen: (o) => { let s=[]; o.forEach(x=>s.push(`EncOff(0x${x.toString(16).toUpperCase()}),`)); return s.join('\n'); } },
+            { id: 'bypass_offsets', title: 'Bypass Offsets', ext: 'cpp', gen: (o) => { let s=[]; o.forEach((x,i)=>s.push(`inline uintptr_t bypass${i+1} = 0x${x.toString(16).toUpperCase()};`)); return s.join('\n'); } },
+            { id: 'direct_patch', title: 'Direct Memory Patch', ext: 'cpp', gen: (o, lib, pat) => { let s=[]; o.forEach(x=>s.push(`MemoryPatch::createWithHex("${lib}", 0x${x.toString(16).toUpperCase()}, "${pat}").Modify();`)); return s.join('\n'); } },
+            { id: 'armfalse_patch', title: 'ArmFalse Patch', ext: 'cpp', gen: (o, lib) => { let s=[]; for(let i=0;i<o.length;i++) s.push(`MemoryPatch::createWithHex(OBFUSCATE("${lib}"), bypass${i+1}, armFalse).Modify();`); return s.join('\n'); } },
+            { id: 'tools_hook', title: 'Tools::Hook Calls', ext: 'cpp', gen: (o, lib) => { let s=[]; o.forEach(x=>s.push(`Tools::Hook((void*)getAbsoluteAddress(OBFUSCATE("${lib}"), 0x${x.toString(16).toUpperCase()}), (void*)hook_bypass, (void**)&orig_bypass);`)); return s.join('\n'); } },
+            { id: 'dobby_hook', title: 'Dobby Hook Calls', ext: 'cpp', gen: (o, lib) => { let s=[]; o.forEach(x=>s.push(`DobbyHook((void*)getAbsoluteAddress(OBFUSCATE("${lib}"), 0x${x.toString(16).toUpperCase()}), (void*)hook_bypass, (void**)&orig_bypass);`)); return s.join('\n'); } },
+            { id: 'hook_lib', title: 'Hook Lib Format', ext: 'cpp', gen: (o, lib) => { let s=[]; o.forEach(x=>s.push(`HOOK_LIB("${lib}", "0x${x.toString(16).toUpperCase()}", h_disabled, o_disabled);`)); return s.join('\n'); } },
+            { id: 'hexpatch_injector', title: 'HexPatch (Injector)', ext: 'lua', gen: (o, lib, pat) => { let s=[]; o.forEach(x=>s.push(`HexPatches.MemoryPatch("${lib}", 0x${x.toString(16).toUpperCase()}, "${pat}", 32);`)); return s.join('\n'); } }
         ];
 
         // --- Functions ---
@@ -622,7 +622,7 @@
 
             // Reset
             els.results.innerHTML = '';
-            fullOutputText = "// ========================================\n//  LYC4N-BYPASS-FORMATTER | GENERATED\n// ========================================\n\n";
+            fullOutputText = "// ========================================\n//  Roxy x Meija-BYPASS-FORMATTER | GENERATED\n// ========================================\n\n";
 
             // Generate Cards
             bypassTypes.forEach(type => {
